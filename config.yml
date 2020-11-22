@@ -1,4 +1,4 @@
-DATA_ROOT: '/home/jialingxiang/NewDTWFrame/Data'
+DATA_ROOT: '/Data'
 OUTPUT_PATH: 'result'
 START_TS: 1521561900
 END_TS: 1524153000
