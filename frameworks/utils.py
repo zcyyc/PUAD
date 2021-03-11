@@ -122,7 +122,7 @@ class NewKPI(KPI):
 
     def CPLE(self, centroid, train_ratio, model_root, if_labeled=False):
         self.get_data(train_ratio, if_labeled)
-        if self.labels.sum() == 0:
+        if self.test_label.sum() == 0:
             return None
         self.concat_centroid(centroid)
         model = CPLELearningModel(basemodel=RandomForestClassifier(config.RF_n_trees, n_jobs=15), max_iter=50,
