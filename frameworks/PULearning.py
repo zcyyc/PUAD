@@ -6,12 +6,15 @@ from sklearn.linear_model import SGDClassifier, LogisticRegression
 from sklearn.linear_model import RidgeClassifier, ElasticNet
 from imblearn.over_sampling import SMOTE
 from collections import Counter
+import logging
+logging.basicConfig(format='%(asctime)s - %(levelname)s: %(message)s',
+                    level=logging.DEBUG)
 
 
 class PULearningModel(BaseEstimator):
-    def __init__(self, samples, labels, length):
+    def __init__(self, samples, labels):
         self.samples = samples
-        self.length = length
+        self.length = len(samples)
         self.labels = labels
 
     def pre_training(self, pre_training_ratio):
@@ -62,7 +65,7 @@ class PULearningModel(BaseEstimator):
             if distances[i] <= negative_threshold and i not in positive_index[0]:
                 self.labels[i] = 0
                 label_negative_count_cur += 1
-        print Counter(self.labels)
+        # print Counter(self.labels)
         return self.labels[:self.length]
 
     # label some samples
@@ -125,12 +128,12 @@ class PULearningModel(BaseEstimator):
                     positive_label_count += 1
                     positive_count_cur += 1
                     self.labels[unlabeled_index[i]] = real_label[unlabeled_index[i]]
-                    print real_label[unlabeled_index[i]]
+                    # print real_label[unlabeled_index[i]]
                 if label_count > max_label_count:
                     break
-            print max(distance_list), min(distance_list)
-            print label_count, positive_label_count
-        print 'finish add reliable samples'
+        #     print max(distance_list), min(distance_list)
+        #     print label_count, positive_label_count
+        # print 'finish add reliable samples'
         return self.labels[:self.length], positive_label_count
     
     # label some samples
@@ -169,12 +172,12 @@ class PULearningModel(BaseEstimator):
                     positive_label_count += 1
                     positive_count_cur += 1
                     self.labels[unlabeled_index[i]] = real_label[unlabeled_index[i]]
-                    print real_label[unlabeled_index[i]]
+                    # print real_label[unlabeled_index[i]]
                 if label_count > max_label_count:
                     break
-            print max(prob_list), min(prob_list)
-            print label_count, positive_label_count
-        print 'finish add reliable samples'
+            # print max(prob_list), min(prob_list)
+            # print label_count, positive_label_count
+        # print 'finish add reliable samples'
         return self.labels[:self.length], positive_label_count
 
     # label some samples
@@ -214,12 +217,12 @@ class PULearningModel(BaseEstimator):
                     positive_label_count += 1
                     positive_count_cur += 1
                     self.labels[unlabeled_index[i]] = real_label[unlabeled_index[i]]
-                    print real_label[unlabeled_index[i]]
+                    # print real_label[unlabeled_index[i]]
                 if label_count > max_label_count:
                     break
-            print max(prob_list), min(prob_list)
-            print label_count, positive_label_count
-        print 'finish add reliable samples'
+        #     print max(prob_list), min(prob_list)
+        #     print label_count, positive_label_count
+        # print 'finish add reliable samples'
         return self.labels[:self.length], positive_label_count
     
     def add_reliable_samples_using_RandomForest(self, class_prior, speed, add_ratio, real_label, model, if_smote=True):
@@ -259,11 +262,12 @@ class PULearningModel(BaseEstimator):
                     positive_label_count += 1
                     positive_count_cur += 1
                     self.labels[unlabeled_index[i]] = real_label[unlabeled_index[i]]
-                    print real_label[unlabeled_index[i]]
+                    # print real_label[unlabeled_index[i]]
                 if label_count > max_label_count:
                     break
-            print label_count, positive_label_count
-        print 'finish add reliable samples'
+        #     print label_count, positive_label_count
+            logging.debug(str(label_count) + str(positive_label_count))
+        logging.debug("Finish adding reliable samples.")
         return self.labels[:self.length], positive_label_count
 
     def add_reliable_samples_without_label(self, class_prior, speed, add_ratio):
@@ -308,8 +312,8 @@ class PULearningModel(BaseEstimator):
                     self.labels[unlabeled_index[i]] = 1
                 if label_count > max_label_count:
                     break
-            print label_count, positive_label_count
-        print 'finish add reliable samples'
+        #     print label_count, positive_label_count
+        # print 'finish add reliable samples'
         return self.labels[:self.length], positive_label_count
 
     def add_reliable_samples_with_uncertainty(self, class_prior, speed, add_ratio, real_label):
@@ -365,8 +369,8 @@ class PULearningModel(BaseEstimator):
                 if label_count > max_label_count:
                     break
 
-        print 'finish add reliable samples with uncertainty'
-        print positive_label_count
+        # print 'finish add reliable samples with uncertainty'
+        # print positive_label_count
         return self.labels[:self.length], positive_label_count
     
 

@@ -9,11 +9,8 @@ time
 '''
 interval=300
 
-Feature_name=[]
-
 '''
 model config
 '''
-
 RF_n_trees=100
 delay=7
