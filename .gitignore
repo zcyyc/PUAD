@@ -1,0 +1,5 @@
+./projects
+*.pyc
+*.sav
+*.csv
+*.swp
